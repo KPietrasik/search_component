@@ -19,7 +19,7 @@ Requirements:
 
 ### `npm start`
 
-## To fire teests
+## To fire tests
 
 ### `npm test`
 
