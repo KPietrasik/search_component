@@ -23,3 +23,4 @@ Requirements:
 
 ### `npm test`
 
+![](./image.png)
