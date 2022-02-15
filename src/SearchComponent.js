@@ -7,6 +7,9 @@ export const API_USERS = "https://api.github.com/search/users?q=";
 export const API_REPO = "https://api.github.com/search/repositories?q=";
 const MAX_RECORDS = 50;
 
+function prepareUserQuery(text) { return API_USERS + text+" in:login" }
+function prepareRepoQuery(text) { return API_REPO + text+" in:full_name" }
+
 const SearchComponent = () => {
   const [usersAndRepos, setUsersAndRepos] = useState([]);
   const [text, setText] = useState("");
@@ -32,7 +35,7 @@ const SearchComponent = () => {
     const repos = responseRepo.data.items.map((gitHubRepos) => {
       return {
         id: gitHubRepos.id,
-        value: gitHubRepos.name,
+        value: gitHubRepos.full_name,
         type: "repositories",
       };
     });
@@ -46,8 +49,8 @@ const SearchComponent = () => {
     setLoading(false);
   };
   const fetchData = (text) => {
-    const requestUsers = axios.get(API_USERS + text);
-    const requestRepo = axios.get(API_REPO + text);
+    const requestUsers = axios.get(prepareUserQuery(text));
+    const requestRepo = axios.get(prepareRepoQuery(text));
 
     axios
       .all([requestUsers, requestRepo])
